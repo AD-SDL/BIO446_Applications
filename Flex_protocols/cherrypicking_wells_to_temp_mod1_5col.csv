@@ -1,0 +1,10 @@
+source_slot,source_well,destination_slot,destination_well,volume
+C2,A1,D3,A1,10
+C2,A1,D3,B1,10
+C2,A1,D3,C1,10
+C2,B1,D3,A2,10
+C2,B1,D3,B2,10
+C2,B1,D3,C2,10
+C2,C1,D3,A3,10
+C2,C1,D3,B3,10
+C2,C1,D3,C3,10
