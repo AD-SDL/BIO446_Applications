@@ -63,7 +63,7 @@ def run(protocol: protocol_api.ProtocolContext):
         module_name="temperature module gen2", location="C3"
     )
     temp_labware = temp_mod1.load_labware(
-        name="opentrons_96_aluminumblock",
+        name="opentrons_96_well_aluminum_block",
         label="Temperature-Controlled Tubes"
     )
 
