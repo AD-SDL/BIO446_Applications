@@ -126,6 +126,7 @@ def run(protocol: protocol_api.ProtocolContext):
         dest=destination_location,
         trash=False
     )
+        
     # how to define location of labware without explicitely loading it
     protocol.move_labware(labware=plate, new_location="A1")
 
