@@ -32,7 +32,7 @@ def run(protocol: protocol_api.ProtocolContext):
     well_data = protocol.params.cherrypicking_wells.parse_as_csv()
     source_slots = [row[0] for row in well_data][1::]
     unique_source_slots = list(set(source_slots))
-    destination_slots = [row[2] for row in well_data][3::]
+    destination_slots = [row[2] for row in well_data][1::]
     unique_destination_slots = list(set(destination_slots))
 
     # load tip rack in deck slot A2
