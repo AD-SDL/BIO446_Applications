@@ -77,7 +77,7 @@ def run(protocol: protocol_api.ProtocolContext):
         disposal_volume=0,  # reduce from default µL to 0 µL
     )
     
-    # Step 3: Multi-channel transfer with mix after
+    # Step 5: Multi-channel transfer with mix after
     p50_multi.pick_up_tip()
     p50_multi.transfer(10,
                   pcr_plate.columns()[2],
@@ -86,7 +86,7 @@ def run(protocol: protocol_api.ProtocolContext):
                   mix_after=(5, 10))   # Mix 5 times with 10µL in destination well
     p50_multi.drop_tip()
 
-    # Step 4: Move plate to thermocycler and run cycles
+    # Step 6: Move plate to thermocycler and run cycles
     thermocycler.open_lid()
     protocol.move_labware(pcr_plate, thermocycler, use_gripper=True)
 
