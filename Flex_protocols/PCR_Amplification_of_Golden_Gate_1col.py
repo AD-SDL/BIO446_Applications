@@ -56,7 +56,7 @@ def run(protocol: protocol_api.ProtocolContext):
         volume=90,
         source=temp_plate["A2"],
         dest=[pcr_plate.columns()[2]],
-        disposal_volume=0,  # reduce from default µL to 0 µL
+        disposal_volume=5,  # reduce from default µL to 5 µL
     )
     
     # Step 3: Multi-channel transfer of GG product to primer with mix after
