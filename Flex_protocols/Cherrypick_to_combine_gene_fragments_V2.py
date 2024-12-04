@@ -3,8 +3,8 @@ from opentrons import protocol_api
 # metadata
 # This protocol will cherrypick sample from any well in source plate
 # and transfer to any well in the destination plate
-# Source, destination and volume info are provided in csv file
-# Note that line 87 must be changed to trash=True before starting real experiment
+# Source, destination and volume info are provided in 5-col csv file
+# Note that line 88 must be changed to trash=True before starting real experiment
 metadata = {
     "protocolName": "Cherrypicking to combine gene fragments",
     "author": "rwilton@anl.gov",
