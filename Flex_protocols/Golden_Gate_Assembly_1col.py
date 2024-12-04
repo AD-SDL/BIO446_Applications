@@ -41,7 +41,11 @@ def run(protocol: protocol_api.ProtocolContext):
     p50_multi = protocol.load_instrument('flex_8channel_50', 'right', tip_racks=[tiprack])
 
     # Step 1: Set module temperatures
-    temp_module.set_temperature(15)
+    temp_module.set_temperature(4)
+
+    # Once temp_module has reached 4C, the 2 ml screw top reagent tube can be placed in block, well A1.
+    protocol.pause("Protocol paused to place GG reagent tube. Resume when ready.")
+
     thermocycler.close_lid()
     thermocycler.set_block_temperature(37)
     thermocycler.set_lid_temperature(70)
@@ -72,7 +76,7 @@ def run(protocol: protocol_api.ProtocolContext):
     # Close thermocycler lid 
     thermocycler.close_lid()  
     
-    # Run thermocycler profile - adjust number of cycles: repetitions=n
+    # Run thermocycler profile - adjust hold times and number of cycles: repetitions=n
     profile = [
         {"temperature":37, "hold_time_seconds":30},
         {"temperature":16, "hold_time_seconds":30},
@@ -81,7 +85,7 @@ def run(protocol: protocol_api.ProtocolContext):
 
     # Denature enzymes to stop reaction
     thermocycler.execute_profile(steps=[
-        {'temperature': 60, 'hold_time_seconds': 30}
+        {'temperature': 60, 'hold_time_seconds': 300}
     ], repetitions=1)
     
     # Hold at 4°C
