@@ -10,7 +10,7 @@ from opentrons import protocol_api
 metadata = {
     'protocolName': 'Golden Gate Assembly',
     'author': 'rwilton@anl.gov',
-    'description': 'Add reagents to gene frag mixtures and perform thermal cycling'
+    'description': 'Implementation of Romero protocol on the Flex'
 }
 
 requirements = {
