@@ -92,6 +92,12 @@ def run(protocol: protocol_api.ProtocolContext):
 
     # Close thermocycler lid 
     thermocycler.close_lid()  
+
+    # Run thermocycler denaturation step
+    profile = [
+        {"temperature":95, "hold_time_seconds":30},
+     ]
+    thermocycler.execute_profile(steps=profile, repetitions=1, block_max_volume=20)
     
     # Run thermocycler profile - adjust hold times and number of cycles: repetitions=n
     profile = [
