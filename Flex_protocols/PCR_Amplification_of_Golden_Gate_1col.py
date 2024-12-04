@@ -45,7 +45,7 @@ def run(protocol: protocol_api.ProtocolContext):
     temp_module.set_temperature(4)
 
     # Once temp_module has reached 4C, the 2 ml screw top reagent tube can be placed in block, well A1.
-    protocol.pause("Protocol paused to place GG reagent tube. Resume when ready.")
+    protocol.pause("Protocol paused to place PCR reagent tubes. Resume when ready.")
 
     thermocycler.close_lid()
     thermocycler.set_block_temperature(25)
