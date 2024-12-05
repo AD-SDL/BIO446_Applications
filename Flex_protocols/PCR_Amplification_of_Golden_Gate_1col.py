@@ -53,6 +53,7 @@ def run(protocol: protocol_api.ProtocolContext):
     
     # Step 2: Distribute primer mix with tip refilling
     # Direct the disposal_volume blowout back to the reagent tube
+    # NOTE: blowout needs to be optimized (larger vol or touch tip)
     p50_single.distribute(
         volume=90,
         source=temp_plate["A2"],
@@ -115,7 +116,6 @@ def run(protocol: protocol_api.ProtocolContext):
         {"temperature":72, "hold_time_seconds":300},
      ]
     thermocycler.execute_profile(steps=profile, repetitions=1, block_max_volume=20)
-    
     
     # Hold at 4°C
     thermocycler.deactivate_lid()
