@@ -51,7 +51,8 @@ def run(protocol: protocol_api.ProtocolContext):
     thermocycler.set_block_temperature(25)
     thermocycler.set_lid_temperature(103)
     
-    # Step 2: Distribute primer mix with tip refilling:
+    # Step 2: Distribute primer mix with tip refilling
+    # Direct the disposal_volume blowout back to the reagent tube
     p50_single.distribute(
         volume=90,
         source=temp_plate["A2"],
