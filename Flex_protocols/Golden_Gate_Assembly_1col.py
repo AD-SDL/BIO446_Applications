@@ -1,4 +1,4 @@
-# This program is designed to set up Golden Gate Reactions
+# This protocol is designed to set up Golden Gate Reactions
 # Fragment mixtures in Col 1, GG reactions to be set up in Col 2.
 # Sanitize thermocycler lid before run.
 # At the end of the protocol, the PCR plate is transferred to 4C module to await 
