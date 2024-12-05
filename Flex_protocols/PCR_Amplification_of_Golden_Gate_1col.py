@@ -75,7 +75,9 @@ def run(protocol: protocol_api.ProtocolContext):
         volume=10,
         source=temp_plate["A3"],
         dest=[pcr_plate.columns()[3]],
-        disposal_volume=5,  # reduce from default µL to 0 µL
+        disposal_volume=5,  # reduce from default µL to 5 µL
+        blow_out=True,  # required to set location
+        blowout_location="source well",
     )
     
     # Step 5: Multi-channel transfer with mix after
