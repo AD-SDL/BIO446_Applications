@@ -102,13 +102,20 @@ def run(protocol: protocol_api.ProtocolContext):
      ]
     thermocycler.execute_profile(steps=profile, repetitions=1, block_max_volume=20)
     
-    # Run thermocycler profile - adjust hold times and number of cycles: repetitions=n
+    # Run thermocycler profile - adjust hold times and number of cycles: repetitions=35
     profile = [
         {"temperature":95, "hold_time_seconds":30},
-        {"temperature":65, "hold_time_seconds":30},
-        {"temperature":72, "hold_time_seconds":30},
+        {"temperature":56, "hold_time_seconds":30},
+        {"temperature":72, "hold_time_seconds":60},
     ]
     thermocycler.execute_profile(steps=profile, repetitions=2, block_max_volume=20)
+
+    # Run thermocycler final extension step
+    profile = [
+        {"temperature":72, "hold_time_seconds":300},
+     ]
+    thermocycler.execute_profile(steps=profile, repetitions=1, block_max_volume=20)
+    
     
     # Hold at 4°C
     thermocycler.deactivate_lid()
