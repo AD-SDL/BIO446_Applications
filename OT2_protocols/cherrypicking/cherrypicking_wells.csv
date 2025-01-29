@@ -1,0 +1,9 @@
+source_slot,source_well,destination_slot,destination_well,volume
+2,A1,3,A1,10
+2,A1,3,B1,10
+2,A1,3,C1,10
+2,B1,3,D1,10
+2,B1,3,E1,10
+2,B1,3,F1,10
+2,C1,3,G1,10
+2,C1,3,H1,10
