@@ -1,5 +1,6 @@
 from opentrons import protocol_api
 
+
 metadata = {
     'protocolName': 'Protein Design CFPE and Assay',
     'author': 'Gyorgy Babnigg <gbabnigg@anl.gov>',
@@ -12,29 +13,58 @@ requirements = {"robotType": "Flex", "apiLevel": "2.20"}
 
 def run(protocol: protocol_api.ProtocolContext):
 
+
+    # labware settings
+    temp_module_temp = 4
+
     # CFPE reagent volume
     cpfe_reagent_vol = 18
     dna_vol = 2
     time_required_for_transfer_and_seal = 5
     cfpe_reaction_time = 240
     cfpe_reaction_dilution_vol = 80
-    reaction_buffer_vol = 80
+    reaction_buffer_vol = 40
     cfpe_reaction_product_per_assay = 10
-    substrate_volume = 40
+    substrate_volume = 80
 
-    # 
-    # Load labware and modules
-    source_plate = protocol.load_labware('nest_96_wellplate_100ul_pcr_full_skirt', 'D2')
+
+    # Trash location
+    trash = protocol.load_trash_bin(location="A1")
+
     
     # Set up temperature module in D1 at 4°C
-    temp_module = protocol.load_module('temperature module', 'D1')
-    temp_module.set_temperature(4)
-    dest_plate = temp_module.load_labware('nest_96_wellplate_100ul_pcr_full_skirt')
-    
+    # is it gen2 or original (temperature module)
+    temp_module = protocol.load_module('temperature module gen2', 'D1')
+    temp_module.set_temperature(celsius=temp_module_temp)
+
+    # add adpater
+    temp_adapter = temp_module.load_adapter(
+        "opentrons_96_well_aluminum_block"
+    )
+
+    # load a PCR plate (PCR amplicons and CFPE reagent in this case)
+    source_plate = temp_adapter.load_labware(
+        "nest_96_wellplate_100ul_pcr_full_skirt"
+    )
+
+
+
     # Set up heater/shaker module at 37°C
     heater_shaker = protocol.load_module('heaterShakerModuleV1', 'C1')
     heater_shaker.set_temperature(37)
+
+
+    dest_plate = temp_module.load_labware('nest_96_wellplate_100ul_pcr_full_skirt')
     
+
+    
+
+    # 
+    # Load labware and modules (??)
+    source_plate = protocol.load_labware('nest_96_wellplate_100ul_pcr_full_skirt', 'D2')
+
+
+
     # Load additional labware
     reservoir = protocol.load_labware('nest_12_reservoir_15ml', 'B1')
     assay_plate = protocol.load_labware('nest_96_wellplate_200ul_flat', 'C2')
@@ -46,8 +76,8 @@ def run(protocol: protocol_api.ProtocolContext):
     
     # Load tip racks (2 for P20, 1 for P1000)
     tip_racks_20 = [
-        protocol.load_labware('opentrons_96_tiprack_20ul', slot)
-        for slot in ['A1', 'A2']
+        protocol.load_labware('opentrons_flex_96_tiprack_200ul', slot)
+        for slot in ['A2', 'A3']
     ]
     
     tip_rack_1000 = protocol.load_labware('opentrons_96_tiprack_1000ul', 'B2')
@@ -57,6 +87,10 @@ def run(protocol: protocol_api.ProtocolContext):
     p1000 = protocol.load_instrument('p1000_single_gen2', 'right', tip_racks=[tip_rack_1000])
     
 
+    # pipettes
+    p1000 = protocol.load_instrument(
+        "flex_1channel_1000", mount="right", tip_racks=[tip_rack_1000]
+    )
 
 
     # load labware into FLEX (can be omitted)
@@ -105,13 +139,7 @@ def run(protocol: protocol_api.ProtocolContext):
     )
     p20.drop_tip()
     
-    # Mix the destination wells after distribution
-    for well in dest_wells:
-        p20.pick_up_tip()
-        p20.mix(3, cpfe_reagent_vol, well)  # Mix 3 times with cpfe_reagent_vol µL
-        p20.blow_out(well)
-        p20.drop_tip()
-    
+
     # Transfer dna_vol µL of DNA to corresponding wells
     # could define destination wells similar to the source wells
     transfers = [
@@ -127,14 +155,25 @@ def run(protocol: protocol_api.ProtocolContext):
             dna_vol,
             source,
             dest,
-            new_tip='never',
+            #new_tip='never',
             mix_after=(3, cpfe_reagent_vol),
             blow_out=True,
             blowout_location='destination well'
         )
         p20.drop_tip()
+
+
+    # Mix the destination wells after distribution
+    # for well in dest_wells:
+    #     p20.pick_up_tip()
+    #     p20.mix(3, cpfe_reagent_vol, well)  # Mix 3 times with cpfe_reagent_vol µL
+    #     p20.blow_out(well)
+    #     p20.drop_tip()
     
-    # move to staging area
+
+
+    
+    # move to staging area (??)
     gripper.pick_up_plate(dest_plate)
     gripper.move_plate(staging_area)
 
@@ -156,10 +195,15 @@ def run(protocol: protocol_api.ProtocolContext):
     # time_required_for_transfer_and_seal minute pause for transfer/peel (['PF400 transfer', 'plate peel', 'PF400 transfer'])
     protocol.delay(minutes=time_required_for_transfer_and_seal)
     
-    # Move plate back to heater/shaker
+    # Move plate back to heater/shaker (??)
     gripper.pick_up_plate(staging_area)
     gripper.move_plate(heater_shaker.plate_nest)
     
+
+
+
+
+
     # Transfer cfpe_reaction_dilution_vol µL from reservoir to destination wells with mixing
     for dest_well in ['A1', 'B1', 'C1', 'D1']:
         p1000.pick_up_tip()
@@ -167,7 +211,7 @@ def run(protocol: protocol_api.ProtocolContext):
             cfpe_reaction_dilution_vol,
             reservoir['A1'],
             heater_shaker.plate_nest[dest_well],
-            new_tip='never',
+            #new_tip='never',
             mix_after=(3, cfpe_reaction_dilution_vol),  # Mix 3 times with cfpe_reaction_dilution_vol µL
             blow_out=True,
             blowout_location='destination well'
@@ -179,7 +223,8 @@ def run(protocol: protocol_api.ProtocolContext):
         well for row in ['A', 'B', 'C', 'D']  # Rows 1-4
         for well in [f'{row}1']  # Column 1
     ]
-    
+    #dest_wells_assay_plate = ['A1', 'B1', 'C1', 'D1']
+
     for dest_well in dest_wells_assay_plate:
         p1000.pick_up_tip()
         p1000.transfer(
@@ -280,7 +325,7 @@ def run(protocol: protocol_api.ProtocolContext):
             reservoir['A2'],
             assay_plate[well],
             new_tip='always', 
-            mix_after=(3, substrate_volume),  # Mix 3 times with substrate_volume µL
+            mix_after=(3, substrate_volume + reaction_buffer_vol),  # Mix 3 times with substrate_volume µL
             blow_out=True,
             blowout_location='destination well'
         )
