@@ -5,7 +5,7 @@ from opentrons.protocol_api import SINGLE
 
 metadata = {
     'protocolName': 'Protein Design CFPE and Assay',
-    'author': 'LDRD team <gbabnigg@anl.gov>',
+    'author': 'LDRD team ',
     'description': 'Golden Gate Assembly for Protein Design',
     'apiLevel': '2.20',
     'requirements': {"robotType": "Flex", "apiLevel": "2.20"},
@@ -72,7 +72,7 @@ def transfer_combinatorial_liquids(protocol, source_plate, dest_plate, pipette, 
     
     # Calculate total combinations before generating them
     total_combinations = calculate_total_combinations(combinations)
-    #print(f"Total destination wells needed: {total_combinations}")
+    protocol.comment(f"Total destination wells needed: {total_combinations}")
     
     # Generate all possible combinations
     all_combinations = generate_all_combinations(combinations)
@@ -88,12 +88,12 @@ def transfer_combinatorial_liquids(protocol, source_plate, dest_plate, pipette, 
         # For each combination, transfer from all source wells to one destination well
         dest_well = dest_plate.wells()[dest_well_number - 1]  # Convert to 0-based index
         
-        print(f"\nTransferring to destination well {dest_well_number}:")
+        protocol.comment(f"\nTransferring to destination well {dest_well_number}:")
         
         for source_well_number in combination:
             source_well = source_plate.wells()[source_well_number - 1]  # Convert to 0-based index
             
-            print(f"  - Transferring {transfer_volume}µL from source well {source_well_number} to dest well {dest_well_number}")
+            protocol.comment(f"  - Transferring {transfer_volume}µL from source well {source_well_number} to dest well {dest_well_number}")
             
             # Perform the transfer
             pipette.transfer(
@@ -125,24 +125,24 @@ def add_master_mix_to_combinations(protocol, source_plate, dest_plate, pipette, 
     
     # Calculate how many destination wells can be served by one master mix well
     dispenses_per_well = master_mix_well_volume // master_mix_volume
-    print(f"Each master mix well ({master_mix_well_volume}µL) can serve {dispenses_per_well} destination wells")
+    protocol.comment(f"Each master mix well ({master_mix_well_volume}µL) can serve {dispenses_per_well} destination wells")
     
     # Calculate how many master mix wells we need
     master_mix_wells_needed = (total_combinations + dispenses_per_well - 1) // dispenses_per_well  # Ceiling division
-    print(f"Total master mix wells needed: {master_mix_wells_needed}")
+    protocol.comment(f"Total master mix wells needed: {master_mix_wells_needed}")
     
     # Track current master mix well and remaining volume
     current_master_mix_well = master_mix_start_well
     remaining_dispenses = dispenses_per_well
     
-    #print(f"\nAdding {master_mix_volume}µL master mix to each destination well:")
+    protocol.comment(f"\nAdding {master_mix_volume}µL master mix to each destination well:")
     
     for dest_well_number in range(1, total_combinations + 1):
         # Check if we need to switch to next master mix well
         if remaining_dispenses == 0:
             current_master_mix_well += 1
             remaining_dispenses = dispenses_per_well
-            print(f"  Switching to master mix well {current_master_mix_well + 1} (0-indexed: {current_master_mix_well})")
+            protocol.comment(f"  Switching to master mix well {current_master_mix_well + 1} (0-indexed: {current_master_mix_well})")
         
         # Get the destination well
         dest_well = dest_plate.wells()[dest_well_number - 1]  # Convert to 0-based index
@@ -150,7 +150,7 @@ def add_master_mix_to_combinations(protocol, source_plate, dest_plate, pipette, 
         # Get the current master mix well
         master_mix_well = source_plate.wells()[current_master_mix_well]
         
-        print(f"  Dest well {dest_well_number}: Adding {master_mix_volume}µL from master mix well {current_master_mix_well + 1} (0-indexed: {current_master_mix_well})")
+        protocol.comment(f"  Dest well {dest_well_number}: Adding {master_mix_volume}µL from master mix well {current_master_mix_well + 1} (0-indexed: {current_master_mix_well})")
         
         # Transfer master mix
         pipette.transfer(
@@ -162,9 +162,9 @@ def add_master_mix_to_combinations(protocol, source_plate, dest_plate, pipette, 
         
         # Update remaining dispenses
         remaining_dispenses -= 1
-    
-    print(f"\nMaster mix addition complete. Used wells {master_mix_start_well + 1} to {current_master_mix_well + 1} (0-indexed: {master_mix_start_well} to {current_master_mix_well})")
-    
+
+    protocol.comment(f"\nMaster mix addition complete. Used wells {master_mix_start_well + 1} to {current_master_mix_well + 1} (0-indexed: {master_mix_start_well} to {current_master_mix_well})")
+
     return current_master_mix_well  # Return the last used well
 
 
@@ -233,12 +233,12 @@ def run(protocol):
 # Preview what will be transferred using the combinations defined above:
 # Calculate total combinations
 total_combos = calculate_total_combinations(config['combinations'])
-print(f"Calculation: {len(config['combinations'][0])} × {len(config['combinations'][1])} × {len(config['combinations'][2])} × {len(config['combinations'][3])} = {total_combos}")
+protocol.comment(f"Calculation: {len(config['combinations'][0])} × {len(config['combinations'][1])} × {len(config['combinations'][2])} × {len(config['combinations'][3])} = {total_combos}")
 
 all_combos = generate_all_combinations(config['combinations'])
 
-print("\nCombination preview:")
-print(f"Total combinations to create: {len(all_combos)}")
+protocol.comment("\nCombination preview:")
+protocol.comment(f"Total combinations to create: {len(all_combos)}")
 for i, combo in enumerate(all_combos):
-    print(f"Dest well {i+1}: Mix from source wells {combo}")
+    protocol.comment(f"Dest well {i+1}: Mix from source wells {combo}")
 
