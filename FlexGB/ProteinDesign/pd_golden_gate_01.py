@@ -16,13 +16,13 @@ metadata = {
 # Protocol Configuration
 config = {
     # Combinatorial mixing
-    'combinations': [[1,9,17],[2],[3,11],[4]],
+    'combinations': [[1,9,17],[3],[4,12],[5]],
     'transfer_volume': 2,  # µL from each source well
     
     # Master mix settings
     'master_mix_volume': 12,  # µL per destination well
     'master_mix_well_volume': 110,  # µL per master mix well
-    'master_mix_start_well': 84,  # 0-indexed well number
+    'master_mix_start_well': 32,  # 0-indexed well number
     
     # Temperature settings
     'temperature': 4,  # °C
@@ -37,7 +37,7 @@ config = {
     
     # Deck positions
     'temp_module_position': 'C1',
-    'source_plate_initial_position': 'A4',
+    'source_plate_initial_position': 'A4', # staging 
     'dest_plate_position': 'B2',
     'tip_rack_position_50_01': 'A1',
     'tip_rack_position_200_01': 'A2'
@@ -72,14 +72,14 @@ def transfer_combinatorial_liquids(protocol, source_plate, dest_plate, pipette, 
     
     # Calculate total combinations before generating them
     total_combinations = calculate_total_combinations(combinations)
-    print(f"Total destination wells needed: {total_combinations}")
+    #print(f"Total destination wells needed: {total_combinations}")
     
     # Generate all possible combinations
     all_combinations = generate_all_combinations(combinations)
     
-    print(f"Generated {len(all_combinations)} combinations:")
-    for i, combo in enumerate(all_combinations):
-        print(f"Destination well {i+1}: Sources {combo}")
+    #print(f"Generated {len(all_combinations)} combinations:")
+    #for i, combo in enumerate(all_combinations):
+        #print(f"Destination well {i+1}: Sources {combo}")
     
     # Perform transfers
     dest_well_number = 1
@@ -135,7 +135,7 @@ def add_master_mix_to_combinations(protocol, source_plate, dest_plate, pipette, 
     current_master_mix_well = master_mix_start_well
     remaining_dispenses = dispenses_per_well
     
-    print(f"\nAdding {master_mix_volume}µL master mix to each destination well:")
+    #print(f"\nAdding {master_mix_volume}µL master mix to each destination well:")
     
     for dest_well_number in range(1, total_combinations + 1):
         # Check if we need to switch to next master mix well
