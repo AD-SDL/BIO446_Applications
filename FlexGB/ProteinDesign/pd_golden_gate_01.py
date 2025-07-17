@@ -230,6 +230,12 @@ def run(protocol):
         config=config
     )
 
+    # mixing the content
+
+    # moving the PCR plate to staging (seal and to thermocycler)
+
+    # moving the reagents to staiging (seal and back to Flex?)
+
 # Preview what will be transferred using the combinations defined above:
 # Calculate total combinations
 total_combos = calculate_total_combinations(config['combinations'])
