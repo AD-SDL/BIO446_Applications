@@ -76,7 +76,26 @@ def transfer_combinatorial_liquids(protocol, source_plate, dest_plate, pipette, 
 # Example usage in your protocol:
 def run(protocol):
     # Load labware
-    source_plate = protocol.load_labware('nest_96_wellplate_100ul_pcr_full_skirt', 'B4')
+ 
+    temp_mod = protocol.load_module(module_name="temperature module gen2", location="C1")
+    temp_adapter = temp_mod.load_adapter("opentrons_96_well_aluminum_block")
+    
+    # Set temperature to 4°C
+    temp_mod.set_temperature(4)
+    
+    # Load source plate initially on A4
+    source_plate = protocol.load_labware('nest_96_wellplate_100ul_pcr_full_skirt', 'A4')
+    
+    # Move source plate to temperature module
+    protocol.move_labware(
+        labware=source_plate,
+        new_location=temp_adapter,
+        use_gripper=True
+    )
+    
+
+
+
     dest_plate = protocol.load_labware('nest_96_wellplate_100ul_pcr_full_skirt', 'C1')
     
     # Load tip rack
