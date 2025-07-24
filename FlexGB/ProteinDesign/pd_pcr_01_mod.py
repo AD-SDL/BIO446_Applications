@@ -16,6 +16,7 @@ requirements = {"robotType": "Flex", "apiLevel": "2.20"}
 # Protocol Configuration
 config = {
     # Combinatorial mixing
+    'combinations': [[2,18],[3,19],[4,20],[5,21]], # 1-indexed source well numbers (2025-07-28) /// new entry
     'transfer_volume': 1,  # µL from each gg well
     'number_of_gg_samples': 6, # /// please calculate
 
@@ -50,6 +51,15 @@ config = {
     'reagent_plate_position': 'C2'
 }
 
+
+def calculate_total_combinations(combinations):
+    """Calculate total number of combinations without generating them"""
+    total = 1
+    for sublist in combinations:
+        total *= len(sublist)
+    return total
+
+
 def transfer_water_to_gg(protocol, reagent_plate, gg_plate, pipette, config):
     water_volume = config['water_volume']
     gg_wells = config['number_of_gg_samples']
@@ -69,7 +79,8 @@ def transfer_water_to_gg(protocol, reagent_plate, gg_plate, pipette, config):
 
 def master_mix_to_pcr_plate(protocol, source_plate, pcr_plate, pipette, config):
     master_mix_volume = config['pcr_master_mix_volume']
-    gg_wells = config['number_of_gg_samples']
+    total_combinations = calculate_total_combinations(config["combinations"]) # /// new entry
+    gg_wells = total_combinations #config['number_of_gg_samples'] # /// new entry
     protocol.comment(f"Total wells to add master mix to: {gg_wells}")
     pcr_master_mix_well_volume = config["pcr_master_mix_well_volume"]
     master_mix_well_volume = config["pcr_master_mix_volume"]
