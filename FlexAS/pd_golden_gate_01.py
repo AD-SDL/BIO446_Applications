@@ -16,12 +16,12 @@ requirements = {"robotType": "Flex", "apiLevel": "2.20"}
 # Protocol Configuration
 config = {
     # Combinatorial mixing
-    'combinations': [[1,9,17],[3],[4,12],[5]],
+    'combinations': [[2,18],[3,19],[4,20],[5,21]],
     'transfer_volume': 2,  # µL from each source well
 
     # Master mix settings
     'master_mix_volume': 12,  # µL per destination well
-    'master_mix_well_volume': 110,  # µL per master mix well
+    'master_mix_well_volume': 100,  # µL per master mix well
     'master_mix_start_well': 32,  # 0-indexed well number
 
     # Temperature settings

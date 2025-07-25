@@ -17,7 +17,8 @@ requirements = {"robotType": "Flex", "apiLevel": "2.20"}
 config = {
     # Combinatorial mixing
     'transfer_volume': 1,  # µL from each gg well
-    'number_of_gg_samples': 6, # /// please calculate
+    # 'number_of_gg_samples': 6,
+    'combinations': [[2,18],[3,19],[4,20],[5,21]],
 
     # Master mix and reagent settings
     'pcr_master_mix_well_volume': 100,
@@ -50,11 +51,26 @@ config = {
     'reagent_plate_position': 'C2'
 }
 
+
+def calculate_total_combinations(combinations):
+    """Calculate total number of combinations without generating them"""
+    total = 1
+    for sublist in combinations:
+        total *= len(sublist)
+    return total
+
+def generate_all_combinations(combinations):
+    """Generate all possible combinations from the jagged array"""
+    return list(itertools.product(*combinations))
+
 def transfer_water_to_gg(protocol, reagent_plate, gg_plate, pipette, config):
     water_volume = config['water_volume']
-    gg_wells = config['number_of_gg_samples']
+    # gg_wells = config['number_of_gg_samples']
     water_well = reagent_plate.wells()[config['water_well'] - 1]
-    protocol.comment(f"Total wells to add water to: {gg_wells}")
+    # protocol.comment(f"Total wells to add water to: {gg_wells}")
+    combinations = config['combinations']
+
+    gg_wells = calculate_total_combinations(combinations)
 
     for well in range(1, gg_wells + 1):
         dest_well = gg_plate.wells()[well - 1]
@@ -69,11 +85,14 @@ def transfer_water_to_gg(protocol, reagent_plate, gg_plate, pipette, config):
 
 def master_mix_to_pcr_plate(protocol, source_plate, pcr_plate, pipette, config):
     master_mix_volume = config['pcr_master_mix_volume']
-    gg_wells = config['number_of_gg_samples']
-    protocol.comment(f"Total wells to add master mix to: {gg_wells}")
+    # gg_wells = config['number_of_gg_samples']
+    # protocol.comment(f"Total wells to add master mix to: {gg_wells}")
     pcr_master_mix_well_volume = config["pcr_master_mix_well_volume"]
     master_mix_well_volume = config["pcr_master_mix_volume"]
     master_mix_start_well = config["master_mix_start_well"]
+    combinations = config['combinations']
+
+    gg_wells = calculate_total_combinations(combinations)
 
     dispenses_per_well = pcr_master_mix_well_volume // master_mix_volume
     protocol.comment(f"Each master mix well ({master_mix_well_volume}µL) can serve {dispenses_per_well} destination wells")
