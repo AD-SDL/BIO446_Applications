@@ -63,6 +63,7 @@ def calculate_total_combinations(combinations):
 def transfer_water_to_gg(protocol, reagent_plate, gg_plate, pipette, config):
     water_volume = config['water_volume']
     gg_wells = config['number_of_gg_samples']
+    gg_wells = calculate_total_combinations(config['combinations'])  # /// new entry
     water_well = reagent_plate.wells()[config['water_well'] - 1]
     protocol.comment(f"Total wells to add water to: {gg_wells}")
 

@@ -1,0 +1,17 @@
+DestinationWell	Number	Sources
+DestinationWell	1	Sources	2	pJL-1_P1F0	3	P1F1	4	P1F2	5	p53_P1F3
+DestinationWell	2	Sources	2	pJL-1_P1F0	3	P1F1	4	P1F2	21	p53_P6F3
+DestinationWell	3	Sources	2	pJL-1_P1F0	3	P1F1	20	P6F2	5	p53_P1F3
+DestinationWell	4	Sources	2	pJL-1_P1F0	3	P1F1	20	P6F2	21	p53_P6F3
+DestinationWell	5	Sources	2	pJL-1_P1F0	19	P6F1	4	P1F2	5	p53_P1F3
+DestinationWell	6	Sources	2	pJL-1_P1F0	19	P6F1	4	P1F2	21	p53_P6F3
+DestinationWell	7	Sources	2	pJL-1_P1F0	19	P6F1	20	P6F2	5	p53_P1F3
+DestinationWell	8	Sources	2	pJL-1_P1F0	19	P6F1	20	P6F2	21	p53_P6F3
+DestinationWell	9	Sources	18	pJL-1_P6F0	3	P1F1	4	P1F2	5	p53_P1F3
+DestinationWell	10	Sources	18	pJL-1_P6F0	3	P1F1	4	P1F2	21	p53_P6F3
+DestinationWell	11	Sources	18	pJL-1_P6F0	3	P1F1	20	P6F2	5	p53_P1F3
+DestinationWell	12	Sources	18	pJL-1_P6F0	3	P1F1	20	P6F2	21	p53_P6F3
+DestinationWell	13	Sources	18	pJL-1_P6F0	19	P6F1	4	P1F2	5	p53_P1F3
+DestinationWell	14	Sources	18	pJL-1_P6F0	19	P6F1	4	P1F2	21	p53_P6F3
+DestinationWell	15	Sources	18	pJL-1_P6F0	19	P6F1	20	P6F2	5	p53_P1F3
+DestinationWell	16	Sources	18	pJL-1_P6F0	19	P6F1	20	P6F2	21	p53_P6F3

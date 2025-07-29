@@ -1,9 +1,11 @@
 from opentrons import protocol_api
-
+import itertools
+from opentrons.protocol_api import SINGLE
 
 metadata = {
     'protocolName': 'Protein Design CFPE and Assay',
-    'author': 'Gyorgy Babnigg <gbabnigg@anl.gov>',
+    'author': 'BATS team',
+    'source': 'FlexGB/pd_cfpe_assay_01.py',
     'description': 'Protein Design CFPE and Assay'
 }
 
