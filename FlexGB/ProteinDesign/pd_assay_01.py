@@ -450,6 +450,7 @@ def run(protocol):
     
     # Step 3: Remove unwanted content from extra column before overlay
     # will this work (switching between 8-channel and single-channel modes)?
+    # lets try with p200 in SINGLE mode
     if config['overlay_extra_column'] and config['reaction_plate_has_extra_column']:
         protocol.comment("=== Step 3: Removing Unwanted Content from Extra Column ===")
         # Switch p200 to single-channel mode for precise removal
@@ -464,9 +465,7 @@ def run(protocol):
             extra_column_number=extra_column_number
         )
         
-        # Switch p50 back to 8-channel mode for overlay
-        p50.configure_nozzle_layout(style='COLUMN', start='A1', tip_racks=[tiprack_50])
-    
+
     # Step 4: Overlay internal standards onto extra column (if enabled)
     if config['overlay_extra_column'] and config['reaction_plate_has_extra_column']:
         protocol.comment("=== Step 4: Overlaying Internal Standards ===")
