@@ -345,6 +345,9 @@ def run(protocol):
     # Start with 8-channel mode for all operations
     p50.configure_nozzle_layout(style='COLUMN', start='A1', tip_racks=[tiprack_50])
     
+    p1000.configure_nozzle_layout(style='SINGLE', start='A1', tip_racks=[tiprack_200])
+
+    
     # Calculate internal standards column position
     internal_standards_column, total_combinations = calculate_internal_standards_column(config)
     protocol.comment(f"=== Dynamic Column Calculation ===")
