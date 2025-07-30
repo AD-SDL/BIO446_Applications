@@ -9,7 +9,7 @@ metadata = {
     'description': 'Assay assembly from completed CFPS reaction plate and internal standards',
     'apiLevel': '2.20',
     'requirements': {"robotType": "Flex", "apiLevel": "2.20"},
-    'source': 'FlexGB/pd_assay_01.py'  
+    'source': '  '  
 }
 
 """
@@ -47,7 +47,7 @@ config = {
     
     # Deep-well plate contents
     'water_well': 1,              # 1-indexed well position for water in deep-well plate
-    'assay_reagent_well': 3,      # 1-indexed well position for assay reagent in deep-well plate
+    'assay_reagent_well': 5,      # 1-indexed well position for assay reagent in deep-well plate
     
     # Temperature settings
     'temperature': 4,  # °C for reaction plate storage during assay assembly
