@@ -9,7 +9,7 @@ metadata = {
     'description': 'Assay assembly from completed CFPS reaction plate and internal standards',
     'apiLevel': '2.20',
     'requirements': {"robotType": "Flex", "apiLevel": "2.20"},
-    'source': 'FlexGB/pd_cfps_assay.py'  
+    'source': 'FlexGB/pd_assay_01.py'  
 }
 
 """
