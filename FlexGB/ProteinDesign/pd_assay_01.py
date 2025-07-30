@@ -449,6 +449,7 @@ def run(protocol):
     )
     
     # Step 3: Remove unwanted content from extra column before overlay
+    # will this work (switching between 8-channel and single-channel modes)?
     if config['overlay_extra_column'] and config['reaction_plate_has_extra_column']:
         protocol.comment("=== Step 3: Removing Unwanted Content from Extra Column ===")
         # Switch p200 to single-channel mode for precise removal
