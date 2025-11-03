@@ -9,6 +9,7 @@ metadata = {
     'description': 'Golden Gate Assembly for Protein Design',
     'apiLevel': '2.20',
     'requirements': {"robotType": "Flex", "apiLevel": "2.20"},
+    
     'source': 'FlexGB/pd_golden_gate_01.py'  
 }
 
@@ -16,7 +17,13 @@ metadata = {
 # Protocol Configuration
 config = {
     # Combinatorial mixing
-    'combinations': [[2,18],[3,19],[4,20],[5,21]], # 1-indexed source well numbers (2025-07-28) /// new entry
+    #'combinations': [[2,18],[3,19],[4,20],[5,21]], # 1-indexed source well numbers (2025-07-28 :: run01)
+    #'combinations': [[2,10,18],[3,11,19],[4,12,20],[5,13,21]], # 1-indexed source well numbers (2025-08-27 :: run02)
+    #'combinations': [[2,10,18],[3,11,19],[4,12,20],[5,13,21]], # 1-indexed source well numbers (2025-09-10 :: run02-repeat)
+    'combinations': [[18,10,2],[11,19,3],[4,20,12],[21,13,5]], # 1-indexed source well numbers (2025-09-15 :: run03)
+    #'combinations': [[2,10,18],[3,11,19],[4,12,20],[5,13,21]], # 1-indexed source well numbers (2025-09-18 :: run04)
+    #'combinations': [[2,10,18],[3,11,19],[4,12,20],[5,13,21]], # 1-indexed source well numbers (2025-09-19 :: run05)
+    
     'transfer_volume': 2,  # µL from each source well
     
     # Master mix settings
@@ -141,6 +148,7 @@ def add_master_mix_to_combinations(protocol, source_plate, dest_plate, pipette, 
         # Check if we need to switch to next master mix well
         if remaining_dispenses == 0:
             current_master_mix_well += 1
+            
             remaining_dispenses = dispenses_per_well
             protocol.comment(f"  Switching to master mix well {current_master_mix_well + 1} (0-indexed: {current_master_mix_well})")
         
