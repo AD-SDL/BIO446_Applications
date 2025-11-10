@@ -22,35 +22,35 @@ config = {
     # the below 2D array defines which source wells to combine for each destination well
     # 2025-11-03.example    
     'non_combinatorial_sources': [
-        [2,3,4,5],
-        [10,3,4,13],
-        [10,11,4,5],
-        [10,11,4,13],
-        [10,11,12,13],
-        [10,19,4,5],
-        [18,19,20,5],
-        [18,19,20,21],
+        [1,2,3,4],
+        [9,2,3,12],
+        [9,10,3,4],
+        [9,10,3,12],
+        [9,10,11,12],
+        [9,18,3,4],
+        [17,18,19,4],
+        [17,18,19,20],
 
-        [2,3,4,5],
-        [10,3,4,13],
-        [10,11,4,5],
-        [10,11,4,13],
-        [10,11,12,13],
-        [10,19,4,5],
-        [18,19,20,5],
-        [18,19,20,21],
+        [1,2,3,4],
+        [9,2,3,12],
+        [9,10,3,4],
+        [9,10,3,12],
+        [9,10,11,12],
+        [9,18,3,4],
+        [17,18,19,4],
+        [17,18,19,20],
 
-        [2,3,4,5],
-        [10,3,4,13],
-        [10,11,4,5],
-        [10,11,4,13],
-        [10,11,12,13],
-        [10,19,4,5],
-        [18,19,20,5],
-        [18,19,20,21]
+        [1,2,3,4],
+        [9,2,3,12],
+        [9,10,3,4],
+        [9,10,3,12],
+        [9,10,11,12],
+        [9,18,3,4],
+        [17,18,19,4],
+        [17,18,19,20]
     ],
     # gbabnigg.changes.end
-    'transfer_volume': 2,  # µL from each source well
+    'transfer_volume': 2.5,  # µL from each source well
 
     # Master mix settings
     'master_mix_volume': 12,  # µL per destination well
@@ -61,8 +61,8 @@ config = {
     'temperature': 4,  # °C
 
     # Labware
-    'fragments_plate_type': 'nest_96_wellplate_100ul_pcr_full_skirt',
-    'gg_plate_type': 'nest_96_wellplate_100ul_pcr_full_skirt',
+    'fragments_plate_type': 'opentrons_96_wellplate_200ul_pcr_full_skirt', # nest_96_wellplate_100ul_pcr_full_skirt
+    'gg_plate_type': 'opentrons_96_wellplate_200ul_pcr_full_skirt', # nest_96_wellplate_100ul_pcr_full_skirt
     'tip_rack_type_50_01': 'opentrons_flex_96_tiprack_50ul',
     'tip_rack_type_50_02': 'opentrons_flex_96_tiprack_50ul',
     'tip_rack_type_50_03': 'opentrons_flex_96_tiprack_50ul',
