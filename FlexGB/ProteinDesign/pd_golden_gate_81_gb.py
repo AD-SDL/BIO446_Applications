@@ -167,8 +167,8 @@ def transfer_combinatorial_liquids(protocol, source_plate, dest_plate, pipette, 
             if idx == len(combination) - 1:
                 protocol.comment(f"  - Mixing in destination well {dest_well_number} after last transfer")
                 # Mix using the same tip
-                pipette.mix(repetitions=3, volume=transfer_volume * len(combination) * 0.8, location=dest_well)
-                
+                pipette.mix(repetitions=3, volume=transfer_volume * len(combination) * 0.7, location=dest_well)
+                pipette.blow_out(dest_well)
             # Drop tip
             pipette.drop_tip()
             
